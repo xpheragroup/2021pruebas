@@ -564,6 +564,40 @@ class Picking(models.Model):
 
     return_reason_id = fields.Many2one("stock.return.reason", string="Motivo de Devolución", copy=False, tracking=True)
 
+    create_lot = fields.Selection([
+        ('crear','Crear')
+        ], string='Definir Lote')
+
+    complete_qty = fields.Selection([
+        ('terminadas','Terminadas')
+        ], string='Cantidades Terminadas')
+
+    @api.onchange('create_lot')
+    def set_defaut_lot(self):
+        if self.create_lot:
+            for line in self.move_line_ids_without_package:
+                if not line.lot_id:
+                    lot_line = self.env['stock.production.lot']
+                    new_lot = lot_line.create({
+                        'product_id':line.product_id.id,
+                        'x_studio_fecha_de_vencimiento_1': datetime.datetime.now(),
+                        'company_id':self.picking_type_id.company_id.id
+                    })
+                    line.lot_id = new_lot
+
+    @api.onchange('complete_qty')
+    def set_terminados(self):
+        if self.complete_qty:
+            line_detallada=0
+            for move_line in self.move_line_ids_without_package:
+                line_detallada+=1
+                if move_line.qty_done == 0:
+                    line_operacion=0
+                    for move in self.move_ids_without_package:
+                        line_operacion+=1
+                        if line_detallada == line_operacion:
+                            move_line.qty_done = move.product_uom_qty
+
     @api.onchange('partner_id')
     def set_identification_dv(self):
         if self.partner_id:
