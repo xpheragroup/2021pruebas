@@ -579,6 +579,7 @@ class Picking(models.Model):
                 if not line.lot_id:
                     lot_line = self.env['stock.production.lot']
                     new_lot = lot_line.create({
+                        'name':str(datetime.datetime.now())+' '+line.product_id.name,
                         'product_id':line.product_id.id,
                         'x_studio_fecha_de_vencimiento_1': datetime.datetime.now(),
                         'company_id':self.picking_type_id.company_id.id
@@ -615,8 +616,6 @@ class Picking(models.Model):
                     if (location != product_operaciones) or (location != product_operaciones_detalladas):
                         raise UserError(_('El almacén del producto o variante de producto no corresponde con el almacén de la ubicación origen. '
                         'Seleccione la variante de producto correspondiente o asigne el almacén adecuado al producto o variante del producto.'))
-
-
 
     def get_root_warehouse(self, location_id):
         stock_location = self.env['stock.location']
