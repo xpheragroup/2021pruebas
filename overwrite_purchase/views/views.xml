@@ -43,6 +43,7 @@
                     <header>
                         <button name="button_confirm" type="object" states="draft" id="draft_confirm" string="Confirmar obsequio"/>
                         <button name="button_draft" states="cancel" string="A borrador" type="object" />
+                        <button name="button_approve" type="object" states="to approve" string="Aprobar Ingreso" class="oe_highlight" groups="purchase.group_purchase_manager"/>
                         <button name="button_cancel" states="draft,to approve,sent,purchase" string="Cancelar" type="object" />
                     </header>
                     <sheet>
@@ -139,9 +140,12 @@
                                                     <field name="product_uom_category_id" invisible="1"/>
                                                     <field name="product_id"
                                                         context="{'partner_id': parent.partner_id}"
-                                                        widget="many2one_barcode"
+                                                        widget="many2one_barcode"/>
+                                                        
+                                                        <!--
                                                         domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
-                                                    />
+                                                        -->
+                                                    
                                                     <label for="product_qty"/>
                                                     <div class="o_row">
                                                         <field name="product_qty"/>

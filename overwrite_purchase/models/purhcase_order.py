@@ -45,6 +45,10 @@ class PurchaseOrder(models.Model):
         if not self.is_gift:
             self.write(
                 {'name': self.env['ir.sequence'].next_by_code('purchase.order') or '/'})
+        elif self.is_gift:
+            for line in self.order_line:
+                line.price_unit = 0
+
         return super(PurchaseOrder, self).button_approve(force=force)
 
     def get_taxes(self):
@@ -76,7 +80,7 @@ class PurchaseOrder(models.Model):
         else:
             self.button_confirm_second_confirm()
 
-    def button_confirm_second_confirm(self):
+    def button_confirm_second_confirm(self):       
         for order in self:
             if order.state not in ['draft', 'sent']:
                 continue
