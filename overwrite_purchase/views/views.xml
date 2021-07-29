@@ -140,12 +140,8 @@
                                                     <field name="product_uom_category_id" invisible="1"/>
                                                     <field name="product_id"
                                                         context="{'partner_id': parent.partner_id}"
-                                                        widget="many2one_barcode"/>
-                                                        
-                                                        <!--
-                                                        domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"
-                                                        -->
-                                                    
+                                                        widget="many2one_barcode"
+                                                        domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
                                                     <label for="product_qty"/>
                                                     <div class="o_row">
                                                         <field name="product_qty"/>
