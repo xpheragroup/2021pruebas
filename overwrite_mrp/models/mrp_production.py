@@ -199,9 +199,9 @@ class Override_Bom_Production(models.Model):
                     else:
                         raise UserError(_('La lista de materiales está en estado borrador.'))
 
-    @api.onchange('add_bom_id')
+    '''@api.onchange('add_bom_id')
     def _onchange_move_raw_add_bom_id(self):
-        self._onchange_move_raw()
+        self._onchange_move_raw()'''
 
     '''@api.onchange('add_product_id')
     def clean_add_bom_id(self):
@@ -356,7 +356,7 @@ class Override_Bom_Production(models.Model):
 
         return moves
     
-    @api.onchange('bom_id', 'product_id', 'product_qty', 'product_uom_id')
+    @api.onchange('bom_id', 'add_bom_id', 'product_id', 'product_qty', 'product_uom_id')
     def _onchange_move_raw(self):
         #self.move_raw_ids=None
         if self.product_id != self._origin.product_id:
@@ -375,29 +375,26 @@ class Override_Bom_Production(models.Model):
                 else:
                     # add new entries
                     list_move_raw += [(0, 0, move_raw_values)]
-                    print("Se debe agregar")
+                    #print("Se debe agregar")
 
-
-            
+            remove_lines = []
             for move_raw_dict_lines in move_raw_dict:
                 aux_bom_line_ids = []
                 for moves_raw_values_line in moves_raw_values:
                     aux_bom_line_ids.append(moves_raw_values_line['bom_line_id'])
-                
+
                 if move_raw_dict_lines not in aux_bom_line_ids:
-                    print()
-                    print("Se debe retirar")
-                    print("")
-                    print(move_raw_dict_lines)
-                    print("")
-                    #delete_line = self.env['stock.move'].search([('id','=',move_raw_dict_lines)])
-                    print("")
-                    print("delete_line")
-                    #print(delete_line)
-                    print("")
-                    #delete_line.unlink()
-                    #move_raw_dict_lines.unlink()
+                    remove_lines.append(move_raw_dict[move_raw_dict_lines].id)
 
             self.move_raw_ids = list_move_raw
+
+            list_move_raw_aux = self.move_raw_ids
+
+            for line in self.move_raw_ids:
+                if line.id in remove_lines:
+                    list_move_raw_aux -= line
+            
+            self.move_raw_ids = list_move_raw_aux
+                
         else:
-            self.move_raw_ids = [(2, move.id) for move in self.move_raw_ids.filtered(lambda m: m.bom_line_id)]
+            self.move_raw_ids = [(2, move.id) for move in self.move_raw_ids.filtered(lambda m: m.bom_line_id)]        

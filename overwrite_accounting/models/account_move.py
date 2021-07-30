@@ -2,9 +2,9 @@ from odoo import models, fields
 
 
 # Import float compare credit note
-from openerp.tools.translate import _
+#from openerp.tools.translate import _
 from odoo.exceptions import RedirectWarning, UserError, ValidationError, AccessError
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.tools import float_compare
 from re import search
 import datetime
