@@ -91,22 +91,22 @@ class Partner(models.Model):
         ('6', '6')], string='Archivos Adicionales',
         copy=False)
 
-    @api.onchange('rut')
+    @api.onchange('x_studio_rut')
     def tracking_rut(self):
         self.user_update_rut = self.env.uid
         self.date_update_rut = datetime.now()
 
-    @api.onchange('camara')
+    @api.onchange('x_studio_camara_de_comercio')
     def tracking_camara(self):
         self.user_update_camara = self.env.uid
         self.date_update_camara = datetime.now()
 
-    @api.onchange('cedula_representante')
+    @api.onchange('x_studio_cedula_representante_legal')
     def tracking_cedula_representante(self):
         self.user_update_cedula_representante = self.env.uid
         self.date_update_cedula_representante = datetime.now()
 
-    @api.onchange('bancaria')
+    @api.onchange('x_studio_certificacion_bancaria')
     def tracking_bancaria(self):
         self.user_update_bancaria = self.env.uid
         self.date_update_bancaria = datetime.now()

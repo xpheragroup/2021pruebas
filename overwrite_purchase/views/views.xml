@@ -296,24 +296,24 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <notebook>
-                    <page string="Documentación">
-                        <group string="Documentación Básica">
+                    <page string="Trazabilidad y Documentos Adicionales">
+                        <group string="Trazabilidad">
                             <group>
-                                <field name="rut" widget="binary" filename="rut_name"/>
+                                <field name="rut" widget="binary" filename="rut_name" invisible="1"/>
                                 <field name="rut_name" invisible="1"/>
                                 <field name="user_update_rut"/>
                                 <field name="date_update_rut"/>
-                                <field name="camara" widget="binary" filename="camara_name"/>
+                                <field name="camara" widget="binary" filename="camara_name" invisible="1"/>
                                 <field name="camara_name" invisible="1"/>
                                 <field name="user_update_camara"/>
                                 <field name="date_update_camara"/>
                             </group>
                             <group>
-                                <field name="cedula_representante" widget="binary" filename="cedula_representante_name"/>
+                                <field name="cedula_representante" widget="binary" filename="cedula_representante_name" invisible="1"/>
                                 <field name="cedula_representante_name" invisible="1"/>
                                 <field name="user_update_cedula_representante"/>
                                 <field name="date_update_cedula_representante"/>
-                                <field name="bancaria" widget="binary" filename="bancaria_name"/>
+                                <field name="bancaria" widget="binary" filename="bancaria_name" invisible="1"/>
                                 <field name="bancaria_name" invisible="1"/>
                                 <field name="user_update_bancaria"/>
                                 <field name="date_update_bancaria"/>
