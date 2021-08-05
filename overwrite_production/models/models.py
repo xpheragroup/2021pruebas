@@ -99,8 +99,10 @@ class MrpProduction(models.Model):
             (mrp.move_raw_ids | mrp.move_finished_ids).to_draft_production_stock_move()
             mrp.write({'user_rev': False})
             mrp.write({'user_apr': False})
+            mrp.write({'user_con': False})
             mrp.write({'date_rev': False})
             mrp.write({'date_apr': False})
+            mrp.write({'date_con': False})
 
         move_raw_ids_aux.pop()
 
