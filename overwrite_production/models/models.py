@@ -300,4 +300,8 @@ class MrpProductProduce(models.TransientModel):
         for mrp in self.production_id:
             mrp.write({'user_ter': self.env.uid})
             mrp.write({'date_ter': datetime.datetime.now()})
+
+            mrp.button_mark_done()
+
         return {'type': 'ir.actions.act_window_close'}
+
